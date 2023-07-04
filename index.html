@@ -1,264 +1,150 @@
 <!DOCTYPE html>
 <html>
-<head> 
-<meta charset="utf-8">
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta name="applicable-device" content="pc,mobile">
-<meta name="viewport"  content="width=device-width, initial-scale=1" />
-<title>zhiyin桌面时钟</title>
-<link rel="icon" href="logo.ico" type="image/x-icon">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<style type="text/css">
-#datetime{text-align: center;}
-a:link {
-	color: #FFF;
-}
-a:visited {
-	color: #FFF;
-}
-a:hover {
-	color: #F90;
-}
-a:active {
-	color: #FFF;
-}
-</style>
-</head> 
-<body> 
-<p>
-	<div id="datetime">
-            <script>
-                setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();", 1000);
-            </script>
-        </div>
-  <style>
-body {
-	background: #000
-}
+	<head>
+		<meta charset="UTF-8">
+		<title>zhiyin在线随机数生成器</title>
+        <meta name="baidu-site-verification" content="sA9lncqwpX" />
+        <meta name="shenma-site-verification" content="9b2a8806d0e679b68f0a30f5bcb67f08_1578560402">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="icon" href="logo.ico" type="image/x-icon">
+        <script>
+			var _hmt = _hmt || [];
+			(function() {
+				var hm = document.createElement("script");
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			})();
+        </script>
+	</head>
 
-.clock {
-	position: absolute;
-	opacity: 1
-}
+	<body>
+		<div class="container jumbotron text-center top">
+            <div class="row">
+                <div class="col-sm-12" style="text-align: left; margin-bottom: 20px;">
+                    <a href="https://zhiyintechnology.github.io/home" title="zhiyin" style="margin-left: 10px;">zhiyin</a>
+                </div>
+            </div>
+			<h1 align="center" style="margin-bottom: 5%;">随机数生成器</h1>
+			<div class="row">
+				<div class="col-md-2 col-3">
+					<span for="shumu" class="input-label"  style="margin-bottom: 0;text-align: center;float: right;padding-top:5px;">数目&nbsp;:</span>
+				</div>
+				<div class="col-md-3 col-9">
+					<input type="number" class="form-control"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" id="shumu" value="10">
+				</div>
+			</div>
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-2 col-3 " style="float: right;">
+					<span for="min" class="input-label" style="margin-bottom: 0;text-align: center;float: right;padding-top:5px;">最小值&nbsp;:</span>
+				</div>
+				<div class="col-md-3 col-9">
+					<input type="number"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" name="min" id="min" value="0">
+				</div>
+				<div class="col-md-2 col-3 input_top" style="float: right;">
+					<span for="max" class="input-label"  style="margin-bottom: 0;text-align: center;float: right;padding-top:5px;">最大值&nbsp;:</span>
+				</div>
+				<div class="col-md-3 col-9 input_top">
+					<input type="number"  onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" class="form-control" name="max" id="max" value="100">
+				</div>
+			</div>
+			<div class="row" style="margin-top: 10px;">
+				<div class="col-md-2 col-3" style="float: right;">
+					<span for="only" class="input-label" style="margin-bottom: 0;text-align: center;float: right;padding-top:5px;">是否唯一&nbsp;:</span>
+				</div>
+				<div class="col-md-3 col-9">
+					<select id="only" class="form-control">
+						<option value="1" selected="selected">&nbsp;唯一</option>
+						<option value="2">&nbsp;不唯一</option>
+					</select>
+				</div>
+			</div>
+			<p align="center" style="margin-top: 5%;">
+				<button class="col-lg-2 col-sm-8 btn-success" id="start" style="border-radius: 5px;height: 40px;border: 0px;	">生成</button>
+				<button class="col-lg-2 col-sm-8 btn-success" id="stop" style="border-radius: 5px;height: 40px;border: 0px;display: none;	">结束</button>
+			</p>
+			<h1 class="random_font" id="shu">&nbsp;</h1>
 
-.fill .clock {
-	left: 50%;
-	top: 50%
-}
+		</div>
+		<p class="container remarks" style="color: gray;">为了在线生成随机数，需要确定两个量：首先，需要生成多少个随机数（即数字）；第二，随机数的范围(即最小值和最大 值）。将数据填入下表中的空白处，然后单击“生成”生成。
+		</p>
+	</body>
+	<script>
+		var timer;
+		var number = 0;
 
-.centre {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 0;
-	height: 0
-}
+		function random_number(min, max) {
+			var rand = parseInt(Math.random() * (max - min + 1) + min);
+			return rand;
+		}
 
-.expand {
-	position: absolute;
-	top: 0;
-	left: 0;
-	transform: translate(-50%, -50%)
-}
+		function array_contain(array, obj) {
+			for(var i = 0; i < array.length; i++) {
+				if(array[i] == obj) 
+					return true;
+			}
+			return false;
+		}
 
-.anchor {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 0;
-	height: 0
-}
+		window.onload = function() {
+			var container = document.getElementById("shu"),
+				start = document.getElementById("start"),
+				stop = document.getElementById("stop");
+			start.onclick = play;
+			stop.onclick = end;
 
-.element {
-	position: absolute;
-	top: 0;
-	left: 0
-}
+			document.onkeyup = function(event) {
+				event = event || window.event;
+				if(event.keyCode == 13 || event.keyCode == 32) {
+					if(number == 0) {
+						play();
+						number = 1;
+					} else {
+						end();
+						number = 0;
+					}
+				}
+			}
+			function play() {
+				clearInterval(timer);
+				timer = setInterval(function() {
+					start.style.display = "none";
+					stop.style.display = "block";
+					var x = document.getElementById("min").value;
+					var y = document.getElementById("max").value;
+					var shu = document.getElementById("shumu").value;
+					var only = document.getElementById("only").value;
+					var data = [];
+					for(var i = 0; i < 10000; i++) {
+						if(data.length >= shu) {
+							break;
+						}
+						var rand = random_number(x, y);
+						if(only == 1) {
+							if(!array_contain(data, rand)) {
+								data.push(rand + " ")
+							}
+						} else {
+							data.push(rand + " ")
+						}
 
-.round {
-	border-radius: 296px
-}
+					}
+					container.innerText = data.join(" ");
+					start.classList.remove("btn-success");
+					start.classList.add("btn-primary");
+					stop.classList.add("btn-danger");
+				}, 100);
+			}
+			function end() {
+				stop.style.display = "none";
+				start.style.display = "block";
+				clearInterval(timer);
+				stop.classList.remove("btn-danger");
+				stop.classList.add("btn-info");
+				start.classList.remove("btn-primary");
+				start.classList.add("btn-success");
 
-.circle-1 {
-	background: #fff;
-	width: 12px;
-	height: 12px
-}
-
-.circle-2 {
-	background: #fa9f22;
-	width: 8px;
-	height: 8px
-}
-
-.circle-3 {
-	background: #000;
-	width: 4px;
-	height: 4px
-}
-
-.second {
-	transform: rotate(180deg)
-}
-
-.minute {
-	transform: rotate(54deg)
-}
-
-.second-hand {
-	width: 2px;
-	height: 164px;
-	background: #fa9f22;
-	transform: translate(-50%, -100%) translateY(24px)
-}
-
-.hour {
-	transform: rotate(304.5deg)
-}
-
-.thin-hand {
-	width: 4px;
-	height: 50px;
-	background: #fff;
-	transform: translate(-50%, -100%)
-}
-
-.fat-hand {
-	width: 10px;
-	height: 57px;
-	border-radius: 10px;
-	background: #fff;
-	transform: translate(-50%, -100%) translateY(-18px)
-}
-
-.minute-hand {
-	height: 112px
-}
-
-.hour-text {
-	position: absolute;
-	font: 40px Hei, Helvetica, Arial, sans-serif;
-	color: #fff;
-	transform: translate(-50%, -50%)
-}
-
-.hour-10 {
-	padding-left: .4ex
-}
-
-.hour-11 {
-	padding-left: .25ex
-}
-
-.minute-text {
-	position: absolute;
-	font: 12px Avenir Next, Helvetica, Arial, sans-serif;
-	color: #fff;
-	transform: translate(-50%, -50%)
-}
-
-.minute-line {
-	background: #fff;
-	width: 1px;
-	height: 9px;
-	transform: translate(-50%, -100%) translateY(-131px);
-	opacity: .34
-}
-#datetime{
-	color: #fff;
-}
-</style>
-<div class="fill">
-<div class="reference"></div>
-<div class="clock" id="utility-clock">
-<div class="centre">
-<div class="dynamic"></div>
-<div class="expand round circle-1"></div>
-<div class="anchor hour">
-<div class="element thin-hand"></div>
-<div class="element fat-hand"></div>
-</div>
-<div class="anchor minute">
-<div class="element thin-hand"></div>
-<div class="element fat-hand minute-hand"></div>
-</div>
-<div class="anchor second">
-<div class="element second-hand"></div>
-</div>
-<div class="expand round circle-2"></div>
-<div class="expand round circle-3"></div>
-</div>
-</div>
-</div>
-<script>
-var clock = document.querySelector('#utility-clock')
-utilityClock(clock)
-if (clock.parentNode.classList.contains('fill')) autoResize(clock, 295 + 32)
-
-function utilityClock(container) {
-	var dynamic = container.querySelector('.dynamic')
-	var hourElement = container.querySelector('.hour')
-	var minuteElement = container.querySelector('.minute')
-	var secondElement = container.querySelector('.second')
-	var minute = function(n) {
-		return n % 5 == 0 ? minuteText(n) : minuteLine(n)
-	}
-	var minuteText = function(n) {
-		var element = document.createElement('div')
-		element.className = 'minute-text'
-		element.innerHTML = (n < 10 ? '0' : '') + n
-		position(element, n / 60, 135)
-		dynamic.appendChild(element)
-	}
-	var minuteLine = function(n) {
-		var anchor = document.createElement('div')
-		anchor.className = 'anchor'
-		var element = document.createElement('div')
-		element.className = 'element minute-line'
-		rotate(anchor, n)
-		anchor.appendChild(element)
-		dynamic.appendChild(anchor)
-	}
-	var hour = function(n) {
-		var element = document.createElement('div')
-		element.className = 'hour-text hour-' + n
-		element.innerHTML = n
-		position(element, n / 12, 105)
-		dynamic.appendChild(element)
-	}
-	var position = function(element, phase, r) {
-		var theta = phase * 2 * Math.PI
-		element.style.top = (-r * Math.cos(theta)).toFixed(1) + 'px'
-		element.style.left = (r * Math.sin(theta)).toFixed(1) + 'px'
-	}
-	var rotate = function(element, second) {
-		element.style.transform = element.style.webkitTransform = 'rotate(' + (second * 6) + 'deg)'
-	}
-	var animate = function() {
-		var now = new Date()
-		var time = now.getHours() * 3600 +
-			now.getMinutes() * 60 +
-			now.getSeconds() * 1 +
-			now.getMilliseconds() / 1000
-		rotate(secondElement, time)
-		rotate(minuteElement, time / 60)
-		rotate(hourElement, time / 60 / 12)
-		requestAnimationFrame(animate)
-	}
-	for (var i = 1; i <= 60; i++) minute(i)
-	for (var i = 1; i <= 12; i++) hour(i)
-	animate()
-}
-
-function autoResize(element, nativeSize) {
-	var update = function() {
-		var scale = Math.min(window.innerWidth, window.innerHeight) / nativeSize
-		element.style.transform = element.style.webkitTransform = 'scale(' + scale.toFixed(3) + ')'
-	}
-	update()
-	window.addEventListener('resize', update)
-}
-</script>
-</body>
+			}
+		}
+	</script>
 </html>
